@@ -1,0 +1,1430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSC 2026 - 100 Days Action Plan</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eaeaea;
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            flex: 1;
+            min-width: 250px;
+        }
+        .control-group label {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        .control-group select {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: white;
+            font-size: 16px;
+        }
+        .schedule-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .day-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            transition: transform 0.3s ease;
+        }
+        .day-card:hover {
+            transform: translateY(-5px);
+        }
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eaeaea;
+        }
+        .date {
+            font-size: 18px;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+        .day {
+            background-color: #3498db;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        .session {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+        }
+        .session-time {
+            font-size: 12px;
+            color: #7f8c8d;
+            margin-bottom: 5px;
+        }
+        .session-subject {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        .remedial {
+            background-color: #e8f4fd;
+            border-left: 4px solid #3498db;
+        }
+        .assessment {
+            background-color: #ffeaa7;
+            border-left: 4px solid #fdcb6e;
+        }
+        .holiday {
+            background-color: #ffebee;
+            border-left: 4px solid #e74c3c;
+            text-align: center;
+            padding: 20px;
+        }
+        .remarks {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #f1f2f6;
+            border-radius: 5px;
+            font-style: italic;
+        }
+        .no-data {
+            text-align: center;
+            padding: 40px;
+            color: #7f8c8d;
+            font-size: 18px;
+        }
+        .subject-schedule {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eaeaea;
+        }
+        .subject-schedule h3 {
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        .subject-dates {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+        }
+        .subject-date {
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid #3498db;
+        }
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eaeaea;
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            .controls {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>SSC 2026 - 100 Days Action Plan</h1>
+            <p>View daily schedules or filter by subject</p>
+        </header>
+        
+        <div class="controls">
+            <div class="control-group">
+                <label for="dateSelect">Select Date:</label>
+                <select id="dateSelect">
+                    <option value="">-- Select a date --</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <label for="subjectSelect">Select Subject:</label>
+                <select id="subjectSelect">
+                    <option value="">-- Select a subject --</option>
+                    <option value="ENGLISH">ENGLISH</option>
+                    <option value="MATHS">MATHS</option>
+                    <option value="PHYSICS">PHYSICS</option>
+                    <option value="BIOLOGY">BIOLOGY</option>
+                    <option value="SOCIAL">SOCIAL</option>
+                    <option value="HINDI">HINDI</option>
+                    <option value="TELUGU">TELUGU</option>
+                </select>
+            </div>
+        </div>
+        
+        <div id="scheduleDisplay">
+            <div class="no-data">Please select a date or subject to view the schedule</div>
+        </div>
+        
+        <footer>
+            <p>SSC 2026 Preparation Plan - Generated from Action Plan Document</p>
+        </footer>
+    </div>
+
+    <script>
+        // Complete schedule data from December 6, 2025 to March 15, 2026
+        const scheduleData = {
+            "2025-12-06": {
+                date: "6-Dec-25",
+                day: "Saturday",
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "TELUGU" },
+                    { time: "10:55AM to 12:15PM", subject: "SOCIAL" },
+                    { time: "1:05PM to 2:30PM", subject: "MATHS" },
+                    { time: "2:40PM to 4 PM", subject: "PHYSICS" }
+                ],
+                assessment: { time: "4 PM to 5 PM", subject: "PHYSICS" }
+            },
+            "2025-12-07": {
+                date: "7-Dec-25",
+                day: "Sunday",
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "ENGLISH" },
+                    { time: "10:55AM to 12:15PM", subject: "SOCIAL" }
+                ]
+            },
+            "2025-12-08": {
+                date: "8-Dec-25",
+                day: "Monday",
+                remedial: { time: "8 AM to 9 AM", subject: "SOCIAL" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "BIOLOGY" },
+                    { time: "10:55AM to 12:15PM", subject: "ENGLISH" },
+                    { time: "1:05PM to 2:30PM", subject: "PHYSICS" },
+                    { time: "2:40PM to 4 PM", subject: "HINDI" }
+                ],
+                assessment: { time: "4 PM to 5 PM", subject: "HINDI" }
+            },
+            "2025-12-09": {
+                date: "9-Dec-25",
+                day: "Tuesday",
+                remedial: { time: "8 AM to 9 AM", subject: "PHYSICS" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "ENGLISH" },
+                    { time: "10:55AM to 12:15PM", subject: "HINDI" },
+                    { time: "1:05PM to 2:30PM", subject: "SOCIAL" },
+                    { time: "2:40PM to 4 PM", subject: "MATHS" }
+                ],
+                assessment: { time: "4 PM to 5 PM", subject: "MATHS" }
+            },
+            "2025-12-10": {
+                date: "10-Dec-25",
+                day: "Wednesday",
+                remedial: { time: "8 AM to 9 AM", subject: "HINDI" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "SOCIAL" },
+                    { time: "10:55AM to 12:15PM", subject: "MATHS" },
+                    { time: "1:05PM to 2:30PM", subject: "ENGLISH" },
+                    { time: "2:40PM to 4 PM", subject: "TELUGU" }
+                ],
+                assessment: { time: "4 PM to 5 PM", subject: "TELUGU" }
+            },
+            "2025-12-11": {
+                date: "11-Dec-25",
+                day: "Thursday",
+                remedial: { time: "8 AM to 9 AM", subject: "MATHS" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "PHYSICS" },
+                    { time: "10:55AM to 12:15PM", subject: "TELUGU/OAS - SKT" },
+                    { time: "1:05PM to 2:30PM", subject: "SOCIAL" },
+                    { time: "2:40PM to 4 PM", subject: "BIOLOGY" }
+                ],
+                assessment: { time: "4 PM to 5 PM", subject: "BIOLOGY" }
+            },
+            "2025-12-12": {
+                date: "12-Dec-25",
+                day: "Friday",
+                remedial: { time: "8 AM to 9 AM", subject: "TELUGU" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "HINDI" },
+                    { time: "10:55AM to 12:15PM", subject: "BIOLOGY" },
+                    { time: "1:05PM to 2:30PM", subject: "MATHS" },
+                    { time: "2:40PM to 4 PM", subject: "ENGLISH" }
+                ],
+                assessment: { time: "4 PM to 5 PM", subject: "ENGLISH" }
+            },
+            "2025-12-13": {
+                date: "13-Dec-25",
+                day: "2nd Saturday",
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "BIOLOGY" },
+                    { time: "1:05PM to 2:30PM", subject: "ENGLISH" }
+                ]
+            },
+            "2025-12-14": {
+                date: "14-Dec-25",
+                day: "Sunday",
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "ENGLISH" },
+                    { time: "1:05PM to 2:30PM", subject: "PHYSICS" }
+                ]
+            },
+            "2025-12-15": {
+                date: "15-Dec-25",
+                day: "Monday",
+                remedial: { time: "8 AM to 9 AM", subject: "BIOLOGY" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "MATHS" },
+                    { time: "10:55AM to 12:15PM", subject: "ENGLISH" },
+                    { time: "1:05PM to 2:30PM", subject: "TELUGU" },
+                    { time: "2:40PM to 4 PM", subject: "SOCIAL" }
+                ],
+                assessment: { time: "4 PM to 5 PM", subject: "SOCIAL" }
+            },
+            "2025-12-16": {
+                date: "16-Dec-25",
+                day: "Tuesday",
+                remedial: { time: "8 AM to 9 AM", subject: "ENGLISH" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "TELUGU/OAS - SKT" },
+                    { time: "10:55AM to 12:15PM", subject: "SOCIAL" },
+                    { time: "1:05PM to 2:30PM", subject: "MATHS" },
+                    { time: "2:40PM to 4 PM", subject: "PHYSICS" }
+                ],
+                assessment: { time: "4 PM to 5 PM", subject: "PHYSICS" }
+            },
+            "2025-12-17": {
+                date: "17-Dec-25",
+                day: "Wednesday",
+                remedial: { time: "8 AM to 9 AM", subject: "SOCIAL" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "BIOLOGY" },
+                    { time: "10:55AM to 12:15PM", subject: "ENGLISH" },
+                    { time: "1:05PM to 2:30PM", subject: "PHYSICS" },
+                    { time: "2:40PM to 4 PM", subject: "HINDI" }
+                ],
+                assessment: { time: "4 PM to 5 PM", subject: "HINDI" }
+            },
+            "2025-12-18": {
+                date: "18-Dec-25",
+                day: "Thursday",
+                remedial: { time: "8 AM to 9 AM", subject: "PHYSICS" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "ENGLISH" },
+                    { time: "10:55AM to 12:15PM", subject: "HINDI" },
+                    { time: "1:05PM to 2:30PM", subject: "SOCIAL" },
+                    { time: "2:40PM to 4 PM", subject: "MATHS" }
+                ],
+                assessment: { time: "4 PM to 5 PM", subject: "MATHS" }
+            },
+            "2025-12-19": {
+                date: "19-Dec-25",
+                day: "Friday",
+                remedial: { time: "8 AM to 9 AM", subject: "HINDI" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "SOCIAL" },
+                    { time: "10:55AM to 12:15PM", subject: "MATHS" },
+                    { time: "1:05PM to 2:30PM", subject: "ENGLISH" },
+                    { time: "2:40PM to 4 PM", subject: "TELUGU" }
+                ],
+                assessment: { time: "4 PM to 5 PM", subject: "TELUGU" }
+            },
+            "2025-12-20": {
+                date: "20-Dec-25",
+                day: "Saturday/Clustration",
+                remedial: { time: "8 AM to 9 AM", subject: "PHYSICS" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "HINDI" },
+                    { time: "10:55AM to 12:15PM", subject: "MATHS" }
+                ],
+                remarks: "CLUSTER MEETING"
+            },
+            "2025-12-21": {
+                date: "21-Dec-25",
+                day: "Sunday",
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "MATHS" },
+                    { time: "1:05PM to 2:30PM", subject: "HINDI" }
+                ]
+            },
+            "2025-12-22": {
+                date: "22-Dec-25",
+                day: "Monday",
+                remedial: { time: "8 AM to 9 AM", subject: "MATHS" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "PHYSICS" },
+                    { time: "10:55AM to 12:15PM", subject: "TELUGU" },
+                    { time: "1:05PM to 2:30PM", subject: "SOCIAL" },
+                    { time: "2:40PM to 4 PM", subject: "BIOLOGY" }
+                ],
+                assessment: { time: "4 PM to 5 PM", subject: "BIOLOGY" }
+            },
+            "2025-12-23": {
+                date: "23-Dec-25",
+                day: "Tuesday",
+                remedial: { time: "8 AM to 9 AM", subject: "TELUGU" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "HINDI" },
+                    { time: "10:55AM to 12:15PM", subject: "BIOLOGY" },
+                    { time: "1:05PM to 2:30PM", subject: "MATHS" },
+                    { time: "2:40PM to 4 PM", subject: "ENGLISH" }
+                ],
+                assessment: { time: "4 PM to 5 PM", subject: "ENGLISH" }
+            },
+            "2025-12-24": {
+                date: "24-Dec-25",
+                day: "Wednesday",
+                remedial: { time: "8 AM to 9 AM", subject: "BIOLOGY" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "MATHS" },
+                    { time: "10:55AM to 12:15PM", subject: "ENGLISH" },
+                    { time: "1:05PM to 2:30PM", subject: "TELUGU" },
+                    { time: "2:40PM to 4 PM", subject: "SOCIAL" }
+                ],
+                assessment: { time: "4 PM to 5 PM", subject: "SOCIAL" }
+            },
+            "2025-12-25": {
+                date: "25-Dec-25",
+                day: "Thursday",
+                holiday: "CHRISTMAS"
+            },
+            "2025-12-26": {
+                date: "26-Dec-25",
+                day: "Friday",
+                remedial: { time: "8 AM to 9 AM", subject: "ENGLISH" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "TELUGU/O4S - SKT" },
+                    { time: "10:55AM to 12:15PM", subject: "SOCIAL" },
+                    { time: "1:05PM to 2:30PM", subject: "MATHS" },
+                    { time: "2:40PM to 4 PM", subject: "PHYSICS" }
+                ],
+                assessment: { time: "4 PM to 5 PM", subject: "PHYSICS" }
+            },
+            "2025-12-27": {
+                date: "27-Dec-25",
+                day: "Saturday",
+                remedial: { time: "8 AM to 9 AM", subject: "SOCIAL" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "BIOLOGY" },
+                    { time: "10:55AM to 12:15PM", subject: "ENGLISH" },
+                    { time: "1:05PM to 2:30PM", subject: "PHYSICS" },
+                    { time: "2:40PM to 4 PM", subject: "HINDI" }
+                ],
+                assessment: { time: "4 PM to 5 PM", subject: "HINDI" }
+            },
+            "2025-12-28": {
+                date: "28-Dec-25",
+                day: "Sunday",
+                sessions: [
+                    { time: "10:55AM to 12:15PM", subject: "SOCIAL" },
+                    { time: "1:05PM to 2:30PM", subject: "PHYSICS" }
+                ]
+            },
+            "2025-12-29": {
+                date: "29-Dec-25",
+                day: "Monday",
+                remedial: { time: "8 AM to 9 AM", subject: "PHYSICS" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "ENGLISH" },
+                    { time: "10:55AM to 12:15PM", subject: "HINDI" },
+                    { time: "1:05PM to 2:30PM", subject: "SOCIAL" },
+                    { time: "2:40PM to 4 PM", subject: "MATHS" }
+                ],
+                assessment: { time: "4 PM to 5 PM", subject: "MATHS" }
+            },
+            "2025-12-30": {
+                date: "30-Dec-25",
+                day: "Tuesday",
+                remedial: { time: "8 AM to 9 AM", subject: "HINDI" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "SOCIAL" },
+                    { time: "10:55AM to 12:15PM", subject: "MATHS" },
+                    { time: "1:05PM to 2:30PM", subject: "ENGLISH" },
+                    { time: "2:40PM to 4 PM", subject: "TELUGU" }
+                ],
+                assessment: { time: "4 PM to 5 PM", subject: "TELUGU" }
+            },
+            "2025-12-31": {
+                date: "31-Dec-25",
+                day: "Wednesday",
+                remedial: { time: "8 AM to 9 AM", subject: "MATHS" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "PHYSICS" },
+                    { time: "10:55AM to 12:15PM", subject: "TELUGU" },
+                    { time: "1:05PM to 2:30PM", subject: "SOCIAL" },
+                    { time: "2:40PM to 4 PM", subject: "BIOLOGY" }
+                ],
+                assessment: { time: "4 PM to 5 PM", subject: "BIOLOGY" }
+            },
+            "2026-01-01": {
+                date: "1-Jan-26",
+                day: "Thursday",
+                remedial: { time: "8 AM to 9 AM", subject: "TELUGU" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "HINDI" },
+                    { time: "10:55AM to 12:15PM", subject: "BIOLOGY" },
+                    { time: "1:05PM to 2:30PM", subject: "MATHS" },
+                    { time: "2:40PM to 4 PM", subject: "ENGLISH" }
+                ],
+                assessment: { time: "4 PM to 5 PM", subject: "ENGLISH" }
+            },
+            "2026-01-02": {
+                date: "2-Jan-26",
+                day: "Friday",
+                remedial: { time: "8 AM to 9 AM", subject: "BIOLOGY" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "MATHS" },
+                    { time: "10:55AM to 12:15PM", subject: "ENGLISH" },
+                    { time: "1:05PM to 2:30PM", subject: "TELUGU/O4S - SKT" },
+                    { time: "2:40PM to 4 PM", subject: "SOCIAL" }
+                ],
+                assessment: { time: "4 PM to 5 PM", subject: "SOCIAL" }
+            },
+            "2026-01-03": {
+                date: "3-Jan-26",
+                day: "Saturday",
+                remedial: { time: "8 AM to 9 AM", subject: "ENGLISH" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "TELUGU" },
+                    { time: "10:55AM to 12:15PM", subject: "SOCIAL" },
+                    { time: "1:05PM to 2:30PM", subject: "MATHS" },
+                    { time: "2:40PM to 4 PM", subject: "PHYSICS" }
+                ],
+                assessment: { time: "4 PM to 5 PM", subject: "PHYSICS" }
+            },
+            "2026-01-04": {
+                date: "4-Jan-26",
+                day: "Sunday",
+                sessions: [
+                    { time: "10:55AM to 12:15PM", subject: "MATHS" },
+                    { time: "2:40PM to 4 PM", subject: "TELUGU" }
+                ]
+            },
+            "2026-01-05": {
+                date: "5-Jan-26",
+                day: "Monday",
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "TELUGU" },
+                    { time: "10:55AM to 12:15PM", subject: "TELUGU - FA3 EXAM" },
+                    { time: "1:05PM to 2:30PM", subject: "MATHS" },
+                    { time: "2:40PM to 4 PM", subject: "MATHS - FA3 EXAM" },
+                    { time: "4 PM to 5 PM", subject: "PHYSICS" }
+                ]
+            },
+            "2026-01-06": {
+                date: "6-Jan-26",
+                day: "Tuesday",
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "HINDI" },
+                    { time: "10:55AM to 12:15PM", subject: "HINDI - FA3 EXAM" },
+                    { time: "1:05PM to 2:30PM", subject: "PS" },
+                    { time: "2:40PM to 4 PM", subject: "P.S - FA3 EXAM" },
+                    { time: "4 PM to 5 PM", subject: "SOCIAL" }
+                ]
+            },
+            "2026-01-07": {
+                date: "7-Jan-26",
+                day: "Wednesday",
+                remedial: { time: "8 AM to 9 AM", subject: "ENGLISH" },
+                sessions: [
+                    { time: "10:55AM to 12:15PM", subject: "ENGLISH- FAS EXAM" },
+                    { time: "1:05PM to 2:30PM", subject: "SOCIAL" },
+                    { time: "2:40PM to 4 PM", subject: "SOCIAL- FAS EXAM" },
+                    { time: "4 PM to 5 PM", subject: "BS" }
+                ]
+            },
+            "2026-01-08": {
+                date: "8-Jan-26",
+                day: "Thursday",
+                remedial: { time: "8 AM to 9 AM", subject: "BS" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "BS-FAS EXAM" },
+                    { time: "10:55AM to 12:15PM", subject: "OSSC-EXAM" },
+                    { time: "1:05PM to 2:30PM", subject: "OSSC-2 / O4S - SKT" },
+                    { time: "2:40PM to 4 PM", subject: "OSSC-2 EXAM" },
+                    { time: "4 PM to 5 PM", subject: "ENGLISH" }
+                ]
+            },
+            "2026-01-09": {
+                date: "9-Jan-26",
+                day: "Friday",
+                remedial: { time: "8 AM to 9 AM", subject: "SOCIAL" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "BIOLOGY" },
+                    { time: "10:55AM to 12:15PM", subject: "ENGLISH" },
+                    { time: "1:05PM to 2:30PM", subject: "PHYSICS" },
+                    { time: "2:40PM to 4 PM", subject: "HINDI" }
+                ],
+                assessment: { time: "4 PM to 5 PM", subject: "HINDI" }
+            },
+            "2026-01-10": {
+                date: "10-Jan-26",
+                day: "2nd Saturday",
+                remedial: { time: "8 AM to 9 AM", subject: "MATHS" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "TELUGU/O4S - SKT" },
+                    { time: "10:55AM to 12:15PM", subject: "ENGLISH" },
+                    { time: "1:05PM to 2:30PM", subject: "BIOLOGY" }
+                ]
+            },
+            "2026-01-11": {
+                date: "11-Jan-26",
+                day: "Sunday",
+                remedial: { time: "8 AM to 9 AM", subject: "SOCIAL" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "PHYSICS" },
+                    { time: "10:55AM to 12:15PM", subject: "HINDI" },
+                    { time: "1:05PM to 2:30PM", subject: "MATHS" }
+                ]
+            },
+            "2026-01-12": {
+                date: "12-Jan-26",
+                day: "Monday",
+                remedial: { time: "8 AM to 9 AM", subject: "MATHS" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "ENGLISH" },
+                    { time: "10:55AM to 12:15PM", subject: "BIOLOGY" },
+                    { time: "1:05PM to 2:30PM", subject: "SOCIAL" }
+                ]
+            },
+            "2026-01-13": {
+                date: "13-Jan-26",
+                day: "Tuesday",
+                // No data in the plan
+            },
+            "2026-01-14": {
+                date: "14-Jan-26",
+                day: "Wednesday",
+                // No data in the plan
+            },
+            "2026-01-15": {
+                date: "15-Jan-26",
+                day: "Thursday",
+                // No data in the plan
+            },
+            "2026-01-16": {
+                date: "16-Jan-26",
+                day: "Friday",
+                remedial: { time: "8 AM to 9 AM", subject: "PHYSICS" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "HINDI" },
+                    { time: "10:55AM to 12:15PM", subject: "TELUGU/O4S - SKT" },
+                    { time: "1:05PM to 2:30PM", subject: "MATHS" }
+                ]
+            },
+            "2026-01-17": {
+                date: "17-Jan-26",
+                day: "Saturday",
+                remedial: { time: "8 AM to 9 AM", subject: "ENGLISH" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "PHYSICS" },
+                    { time: "10:55AM to 12:15PM", subject: "TELUGU" },
+                    { time: "1:05PM to 2:30PM", subject: "BIOLOGY" }
+                ]
+            },
+            "2026-01-18": {
+                date: "18-Jan-26",
+                day: "Sunday",
+                remedial: { time: "8 AM to 9 AM", subject: "BIOLOGY" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "TELUGU" },
+                    { time: "10:55AM to 12:15PM", subject: "HINDI" },
+                    { time: "1:05PM to 2:30PM", subject: "SOCIAL" }
+                ]
+            },
+            "2026-01-19": {
+                date: "19-Jan-26",
+                day: "Monday",
+                remedial: { time: "8 AM to 9 AM", subject: "PHYSICS" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "ENGLISH" },
+                    { time: "10:55AM to 12:15PM", subject: "HINDI" },
+                    { time: "1:05PM to 2:30PM", subject: "SOCIAL" },
+                    { time: "2:40PM to 4 PM", subject: "MATHS" }
+                ],
+                assessment: { time: "4 PM to 5 PM", subject: "MATHS" }
+            },
+            "2026-01-20": {
+                date: "20-Jan-26",
+                day: "Tuesday",
+                remedial: { time: "8 AM to 9 AM", subject: "HINDI" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "SOCIAL" },
+                    { time: "10:55AM to 12:15PM", subject: "MATHS" },
+                    { time: "1:05PM to 2:30PM", subject: "ENGLISH" },
+                    { time: "2:40PM to 4 PM", subject: "TELUGU" }
+                ],
+                assessment: { time: "4 PM to 5 PM", subject: "TELUGU" }
+            },
+            "2026-01-21": {
+                date: "21-Jan-26",
+                day: "Wednesday",
+                remedial: { time: "8 AM to 9 AM", subject: "MATHS" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "PHYSICS" },
+                    { time: "10:55AM to 12:15PM", subject: "TELUGU" },
+                    { time: "1:05PM to 2:30PM", subject: "SOCIAL" },
+                    { time: "2:40PM to 4 PM", subject: "BIOLOGY" }
+                ],
+                assessment: { time: "4 PM to 5 PM", subject: "BIOLOGY" }
+            },
+            "2026-01-22": {
+                date: "22-Jan-26",
+                day: "Thursday",
+                remedial: { time: "8 AM to 9 AM", subject: "TELUGU" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "HINDI" },
+                    { time: "10:55AM to 12:15PM", subject: "BIOLOGY" },
+                    { time: "1:05PM to 2:30PM", subject: "MATHS" },
+                    { time: "2:40PM to 4 PM", subject: "ENGLISH" }
+                ],
+                assessment: { time: "4 PM to 5 PM", subject: "ENGLISH" }
+            },
+            "2026-01-23": {
+                date: "23-Jan-26",
+                day: "Friday",
+                remedial: { time: "8 AM to 9 AM", subject: "BIOLOGY" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "MATHS" },
+                    { time: "10:55AM to 12:15PM", subject: "ENGLISH" },
+                    { time: "1:05PM to 2:30PM", subject: "TELUGU/O4S - SKT" },
+                    { time: "2:40PM to 4 PM", subject: "SOCIAL" }
+                ],
+                assessment: { time: "4 PM to 5 PM", subject: "SOCIAL" },
+                remarks: "CLUSTER MEETING"
+            },
+            "2026-01-24": {
+                date: "24-Jan-26",
+                day: "Saturday",
+                remedial: { time: "8 AM to 9 AM", subject: "PHYSICS" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "HINDI" },
+                    { time: "10:55AM to 12:15PM", subject: "BIOLOGY" }
+                ]
+            },
+            "2026-01-25": {
+                date: "25-Jan-26",
+                day: "Sunday",
+                sessions: [
+                    { time: "10:55AM to 12:15PM", subject: "HINDI" },
+                    { time: "2:40PM to 4 PM", subject: "MATHS" }
+                ]
+            },
+            "2026-01-26": {
+                date: "26-Jan-26",
+                day: "Monday",
+                holiday: "REPUBLIC DAY"
+            },
+            "2026-01-27": {
+                date: "27-Jan-26",
+                day: "Tuesday",
+                // No data in the plan
+            },
+            "2026-01-28": {
+                date: "28-Jan-26",
+                day: "Wednesday",
+                remedial: { time: "8 AM to 9 AM", subject: "ENGLISH" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "TELUGU" },
+                    { time: "10:55AM to 12:15PM", subject: "SOCIAL" },
+                    { time: "1:05PM to 2:30PM", subject: "MATHS" },
+                    { time: "2:40PM to 4 PM", subject: "PHYSICS" }
+                ],
+                assessment: { time: "4 PM to 5 PM", subject: "PHYSICS" }
+            },
+            "2026-01-29": {
+                date: "29-Jan-26",
+                day: "Thursday",
+                remedial: { time: "8 AM to 9 AM", subject: "SOCIAL" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "BIOLOGY" },
+                    { time: "10:55AM to 12:15PM", subject: "ENGLISH" },
+                    { time: "1:05PM to 2:30PM", subject: "PHYSICS" },
+                    { time: "2:40PM to 4 PM", subject: "HINDI" }
+                ],
+                assessment: { time: "4 PM to 5 PM", subject: "HINDI" }
+            },
+            "2026-01-30": {
+                date: "30-Jan-26",
+                day: "Friday",
+                remedial: { time: "8 AM to 9 AM", subject: "PHYSICS" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "ENGLISH" },
+                    { time: "10:55AM to 12:15PM", subject: "HINDI" },
+                    { time: "1:05PM to 2:30PM", subject: "SOCIAL" },
+                    { time: "2:40PM to 4 PM", subject: "MATHS" }
+                ],
+                assessment: { time: "4 PM to 5 PM", subject: "MATHS" }
+            },
+            "2026-01-31": {
+                date: "31-Jan-26",
+                day: "Saturday",
+                remedial: { time: "8 AM to 9 AM", subject: "HINDI" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "SOCIAL" },
+                    { time: "10:55AM to 12:15PM", subject: "MATHS" },
+                    { time: "1:05PM to 2:30PM", subject: "ENGLISH" },
+                    { time: "2:40PM to 4 PM", subject: "TELUGU" }
+                ],
+                assessment: { time: "4 PM to 5 PM", subject: "TELUGU" }
+            },
+            "2026-02-01": {
+                date: "1-Feb-26",
+                day: "Sunday",
+                sessions: [
+                    { time: "10:55AM to 12:15PM", subject: "PHYSICS" },
+                    { time: "2:40PM to 4 PM", subject: "ENGLISH" }
+                ]
+            },
+            "2026-02-02": {
+                date: "2-Feb-26",
+                day: "Monday",
+                remedial: { time: "8 AM to 9 AM", subject: "MATHS" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "PHYSICS" },
+                    { time: "10:55AM to 12:15PM", subject: "TELUGU" },
+                    { time: "1:05PM to 2:30PM", subject: "SOCIAL" },
+                    { time: "2:40PM to 4 PM", subject: "BIOLOGY" }
+                ],
+                assessment: { time: "4 PM to 5 PM", subject: "BIOLOGY" }
+            },
+            "2026-02-03": {
+                date: "3-Feb-26",
+                day: "Tuesday",
+                remedial: { time: "8 AM to 9 AM", subject: "TELUGU" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "HINDI" },
+                    { time: "10:55AM to 12:15PM", subject: "BIOLOGY" },
+                    { time: "1:05PM to 2:30PM", subject: "MATHS" },
+                    { time: "2:40PM to 4 PM", subject: "ENGLISH" }
+                ],
+                assessment: { time: "4 PM to 5 PM", subject: "ENGLISH" }
+            },
+            "2026-02-04": {
+                date: "4-Feb-26",
+                day: "Wednesday",
+                remedial: { time: "8 AM to 9 AM", subject: "BIOLOGY" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "MATHS" },
+                    { time: "10:55AM to 12:15PM", subject: "ENGLISH" },
+                    { time: "1:05PM to 2:30PM", subject: "TELUGU" },
+                    { time: "2:40PM to 4 PM", subject: "SOCIAL" }
+                ],
+                assessment: { time: "4 PM to 5 PM", subject: "SOCIAL" }
+            },
+            "2026-02-05": {
+                date: "5-Feb-26",
+                day: "Thursday",
+                remedial: { time: "8 AM to 9 AM", subject: "ENGLISH" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "TELUGU" },
+                    { time: "10:55AM to 12:15PM", subject: "SOCIAL" },
+                    { time: "1:05PM to 2:30PM", subject: "MATHS" },
+                    { time: "2:40PM to 4 PM", subject: "PHYSICS" }
+                ],
+                assessment: { time: "4 PM to 5 PM", subject: "PHYSICS" }
+            },
+            "2026-02-06": {
+                date: "6-Feb-26",
+                day: "Friday",
+                remedial: { time: "8 AM to 9 AM", subject: "SOCIAL" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "BIOLOGY" },
+                    { time: "10:55AM to 12:15PM", subject: "ENGLISH" },
+                    { time: "1:05PM to 2:30PM", subject: "PHYSICS" },
+                    { time: "2:40PM to 4 PM", subject: "HINDI" }
+                ],
+                assessment: { time: "4 PM to 5 PM", subject: "HINDI" }
+            },
+            "2026-02-07": {
+                date: "7-Feb-26",
+                day: "Saturday",
+                remedial: { time: "8 AM to 9 AM", subject: "PHYSICS" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "ENGLISH" },
+                    { time: "10:55AM to 12:15PM", subject: "HINDI" },
+                    { time: "1:05PM to 2:30PM", subject: "SOCIAL" },
+                    { time: "2:40PM to 4 PM", subject: "MATHS" }
+                ],
+                assessment: { time: "4 PM to 5 PM", subject: "MATHS" }
+            },
+            "2026-02-08": {
+                date: "8-Feb-26",
+                day: "Sunday",
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "MATHS" },
+                    { time: "1:05PM to 2:30PM", subject: "TELUGU" }
+                ]
+            },
+            "2026-02-09": {
+                date: "9-Feb-26",
+                day: "MONDAY",
+                remedial: { time: "8 AM to 9 AM", subject: "TELUGU" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "FL Exam" },
+                    { time: "1:05PM to 2:30PM", subject: "HINDI" }
+                ]
+            },
+            "2026-02-10": {
+                date: "10-Feb-26",
+                day: "TUESDAY",
+                remedial: { time: "8 AM to 9 AM", subject: "HINDI" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "SL EXAM" },
+                    { time: "1:05PM to 2:30PM", subject: "ENGLISH" }
+                ]
+            },
+            "2026-02-11": {
+                date: "11-Feb-26",
+                day: "WEDNESDAY",
+                holiday: "HOLI - HOLIDAY"
+            },
+            "2026-02-12": {
+                date: "12-Feb-26",
+                day: "THURSDAY",
+                remedial: { time: "8 AM to 9 AM", subject: "ENGLISH" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "ENGLISH EXAM" },
+                    { time: "1:05PM to 2:30PM", subject: "MATHS" }
+                ]
+            },
+            "2026-02-13": {
+                date: "13-Feb-26",
+                day: "FRIDAY",
+                remedial: { time: "8 AM to 9 AM", subject: "MATHS" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "MATHS EXAM" },
+                    { time: "1:05PM to 2:30PM", subject: "PHYSICS" }
+                ]
+            },
+            "2026-02-14": {
+                date: "14-Feb-26",
+                day: "SATURDAY",
+                remedial: { time: "8 AM to 9 AM", subject: "PHYSICS" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "PHYSICS EXAM" },
+                    { time: "1:05PM to 2:30PM", subject: "BIOLOGY" }
+                ]
+            },
+            "2026-02-15": {
+                date: "15-Feb-26",
+                day: "SUNDAY",
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "SOCIAL" },
+                    { time: "1:05PM to 2:30PM", subject: "HINDI" }
+                ]
+            },
+            "2026-02-16": {
+                date: "16-Feb-26",
+                day: "MONDAY",
+                remedial: { time: "8 AM to 9 AM", subject: "BIOLOGY" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "BIOLOGY EXAM" },
+                    { time: "1:05PM to 2:30PM", subject: "SOCIAL" }
+                ]
+            },
+            "2026-02-17": {
+                date: "17-Feb-26",
+                day: "TUESDAY",
+                remedial: { time: "8 AM to 9 AM", subject: "SOCIAL" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "SOCIAL EXAM" },
+                    { time: "1:05PM to 2:30PM", subject: "BIOLOGY" },
+                    { time: "2:40PM to 4 PM", subject: "TELUGU" },
+                    { time: "4 PM to 5 PM", subject: "TELUGU" }
+                ]
+            },
+            "2026-02-18": {
+                date: "18-Feb-26",
+                day: "WEDNESDAY",
+                remedial: { time: "8 AM to 9 AM", subject: "TELUGU/045 - SKT" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "045 - SKT /OSSC EXAM-1 / PS" },
+                    { time: "1:05PM to 2:30PM", subject: "HINDI" },
+                    { time: "2:40PM to 4 PM", subject: "BIOLOGY" },
+                    { time: "4 PM to 5 PM", subject: "BIOLOGY" }
+                ]
+            },
+            "2026-02-19": {
+                date: "19-Feb-26",
+                day: "THURSDAY",
+                remedial: { time: "8 AM to 9 AM", subject: "BIOLOGY" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "OSSC-2 / VOC EXAM /HINDI" },
+                    { time: "1:05PM to 2:30PM", subject: "MATHS" },
+                    { time: "2:40PM to 4 PM", subject: "ENGLISH" },
+                    { time: "4 PM to 5 PM", subject: "ENGLISH" }
+                ]
+            },
+            "2026-02-20": {
+                date: "20-Feb-26",
+                day: "Friday",
+                remedial: { time: "8 AM to 9 AM", subject: "HINDI" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "SOCIAL" },
+                    { time: "10:55AM to 12:15PM", subject: "MATHS" },
+                    { time: "1:05PM to 2:30PM", subject: "ENGLISH" },
+                    { time: "2:40PM to 4 PM", subject: "TELUGU/045 - SKT" }
+                ],
+                assessment: { time: "4 PM to 5 PM", subject: "TELUGU/045 - SKT" }
+            },
+            "2026-02-21": {
+                date: "21-Feb-26",
+                day: "Saturday",
+                remedial: { time: "8 AM to 9 AM", subject: "PHYSICS" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "HINDI" },
+                    { time: "10:55AM to 12:15PM", subject: "BIOLOGY" }
+                ],
+                remarks: "CLUSTER MEETING"
+            },
+            "2026-02-22": {
+                date: "22-Feb-26",
+                day: "Sunday",
+                sessions: [
+                    { time: "10:55AM to 12:15PM", subject: "HINDI" },
+                    { time: "1:05PM to 2:30PM", subject: "MATHS" }
+                ]
+            },
+            "2026-02-23": {
+                date: "23-Feb-26",
+                day: "Monday",
+                remedial: { time: "8 AM to 9 AM", subject: "MATHS" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "PHYSICS" },
+                    { time: "10:55AM to 12:15PM", subject: "TELUGU" },
+                    { time: "1:05PM to 2:30PM", subject: "SOCIAL" },
+                    { time: "2:40PM to 4 PM", subject: "BIOLOGY" }
+                ],
+                assessment: { time: "4 PM to 5 PM", subject: "BIOLOGY" }
+            },
+            "2026-02-24": {
+                date: "24-Feb-26",
+                day: "Tuesday",
+                remedial: { time: "8 AM to 9 AM", subject: "TELUGU/045 - SKT" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "HINDI" },
+                    { time: "10:55AM to 12:15PM", subject: "BIOLOGY" },
+                    { time: "1:05PM to 2:30PM", subject: "MATHS" },
+                    { time: "2:40PM to 4 PM", subject: "ENGLISH" }
+                ],
+                assessment: { time: "4 PM to 5 PM", subject: "ENGLISH" }
+            },
+            "2026-02-25": {
+                date: "25-Feb-26",
+                day: "Wednesday",
+                remedial: { time: "8 AM to 9 AM", subject: "BIOLOGY" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "MATHS" },
+                    { time: "10:55AM to 12:15PM", subject: "ENGLISH" },
+                    { time: "1:05PM to 2:30PM", subject: "TELUGU" },
+                    { time: "2:40PM to 4 PM", subject: "SOCIAL" }
+                ],
+                assessment: { time: "4 PM to 5 PM", subject: "SOCIAL" }
+            },
+            "2026-02-26": {
+                date: "26-Feb-26",
+                day: "Thursday",
+                remedial: { time: "8 AM to 9 AM", subject: "ENGLISH" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "TELUGU" },
+                    { time: "10:55AM to 12:15PM", subject: "SOCIAL" },
+                    { time: "1:05PM to 2:30PM", subject: "MATHS" },
+                    { time: "2:40PM to 4 PM", subject: "PHYSICS" }
+                ],
+                assessment: { time: "4 PM to 5 PM", subject: "PHYSICS" }
+            },
+            "2026-02-27": {
+                date: "27-Feb-26",
+                day: "Friday",
+                remedial: { time: "8 AM to 9 AM", subject: "SOCIAL" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "BIOLOGY" },
+                    { time: "10:55AM to 12:15PM", subject: "ENGLISH" },
+                    { time: "1:05PM to 2:30PM", subject: "PHYSICS" },
+                    { time: "2:40PM to 4 PM", subject: "HINDI" }
+                ],
+                assessment: { time: "4 PM to 5 PM", subject: "HINDI" }
+            },
+            "2026-02-28": {
+                date: "28-Feb-26",
+                day: "Saturday",
+                remedial: { time: "8 AM to 9 AM", subject: "PHYSICS" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "ENGLISH" },
+                    { time: "10:55AM to 12:15PM", subject: "HINDI" },
+                    { time: "1:05PM to 2:30PM", subject: "SOCIAL" },
+                    { time: "2:40PM to 4 PM", subject: "MATHS" }
+                ],
+                assessment: { time: "4 PM to 5 PM", subject: "MATHS" }
+            },
+            "2026-03-01": {
+                date: "1-Mar-26",
+                day: "Sunday",
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "PHYSICS" },
+                    { time: "1:05PM to 2:30PM", subject: "TELUGU" }
+                ]
+            },
+            "2026-03-02": {
+                date: "2-Mar-26",
+                day: "Monday",
+                remedial: { time: "8 AM to 9 AM", subject: "TELUGU" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "FL Exam" },
+                    { time: "1:05PM to 2:30PM", subject: "HINDI" }
+                ]
+            },
+            "2026-03-03": {
+                date: "3-Mar-26",
+                day: "Tuesday",
+                remedial: { time: "8 AM to 9 AM", subject: "HINDI" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "SL EXAM" },
+                    { time: "1:05PM to 2:30PM", subject: "ENGLISH" }
+                ]
+            },
+            "2026-03-04": {
+                date: "4-Mar-26",
+                day: "Wednesday",
+                holiday: "HOLL - HOLIDAY"
+            },
+            "2026-03-05": {
+                date: "5-Mar-26",
+                day: "Thursday",
+                remedial: { time: "8 AM to 9 AM", subject: "ENGLISH" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "ENGLISH EXAM" },
+                    { time: "1:05PM to 2:30PM", subject: "MATHS" }
+                ]
+            },
+            "2026-03-06": {
+                date: "6-Mar-26",
+                day: "Friday",
+                remedial: { time: "8 AM to 9 AM", subject: "MATHS" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "MATHS EXAM" },
+                    { time: "1:05PM to 2:30PM", subject: "PHYSICS" }
+                ]
+            },
+            "2026-03-07": {
+                date: "7-Mar-26",
+                day: "Saturday",
+                remedial: { time: "8 AM to 9 AM", subject: "PHYSICS" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "PHYSICS EXAM" },
+                    { time: "1:05PM to 2:30PM", subject: "BIOLOGY" }
+                ]
+            },
+            "2026-03-08": {
+                date: "8-Mar-26",
+                day: "Sunday",
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "SOCIAL" },
+                    { time: "1:05PM to 2:30PM", subject: "BIOLOGY" }
+                ]
+            },
+            "2026-03-09": {
+                date: "9-Mar-26",
+                day: "Monday",
+                remedial: { time: "8 AM to 9 AM", subject: "BIOLOGY" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "BIOLOGY EXAM" },
+                    { time: "1:05PM to 2:30PM", subject: "SOCIAL" }
+                ]
+            },
+            "2026-03-10": {
+                date: "10-Mar-26",
+                day: "Tuesday",
+                remedial: { time: "8 AM to 9 AM", subject: "SOCIAL" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "SOCIAL EXAM" },
+                    { time: "1:05PM to 2:30PM", subject: "BIOLOGY" },
+                    { time: "2:40PM to 4 PM", subject: "TELUGU" },
+                    { time: "4 PM to 5 PM", subject: "TELUGU" }
+                ]
+            },
+            "2026-03-11": {
+                date: "11-Mar-26",
+                day: "Wednesday",
+                remedial: { time: "8 AM to 9 AM", subject: "TELUGU/045 - SKT" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "045-SKT/OSSC EXAM-1/ PS" },
+                    { time: "10:55AM to 12:15PM", subject: "HINDI" },
+                    { time: "1:05PM to 2:30PM", subject: "BIOLOGY" },
+                    { time: "2:40PM to 4 PM", subject: "BIOLOGY" }
+                ]
+            },
+            "2026-03-12": {
+                date: "12-Mar-26",
+                day: "Thursday",
+                remedial: { time: "8 AM to 9 AM", subject: "BIOLOGY" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "OssC-2 / VOC EXAM /HINDI" },
+                    { time: "1:05PM to 2:30PM", subject: "MATHS" },
+                    { time: "2:40PM to 4 PM", subject: "ENGLISH" },
+                    { time: "4 PM to 5 PM", subject: "ENGLISH" }
+                ]
+            },
+            "2026-03-13": {
+                date: "13-Mar-26",
+                day: "Friday",
+                remedial: { time: "8 AM to 9 AM", subject: "ENGLISH" },
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "PHYSICS" },
+                    { time: "10:55AM to 12:15PM", subject: "MATHS" },
+                    { time: "1:05PM to 2:30PM", subject: "HINDI" },
+                    { time: "2:40PM to 4 PM", subject: "SOCIAL" }
+                ],
+                assessment: { time: "4 PM to 5 PM", subject: "SOCIAL" }
+            },
+            "2026-03-14": {
+                date: "14-Mar-26",
+                day: "Saturday",
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "BIOLOGY" },
+                    { time: "1:05PM to 2:30PM", subject: "SOCIAL" }
+                ]
+            },
+            "2026-03-15": {
+                date: "15-Mar-26",
+                day: "Sunday",
+                sessions: [
+                    { time: "9:15AM to 10:40AM", subject: "TELUGU" },
+                    { time: "1:05PM to 2:30PM", subject: "TELUGU" }
+                ]
+            }
+        };
+
+        // Populate the date dropdown
+        const dateSelect = document.getElementById('dateSelect');
+        Object.keys(scheduleData).forEach(date => {
+            const option = document.createElement('option');
+            option.value = date;
+            option.textContent = `${scheduleData[date].date} (${scheduleData[date].day})`;
+            dateSelect.appendChild(option);
+        });
+
+        // Display schedule when date is selected
+        dateSelect.addEventListener('change', function() {
+            const selectedDate = this.value;
+            const scheduleDisplay = document.getElementById('scheduleDisplay');
+            
+            if (!selectedDate) {
+                scheduleDisplay.innerHTML = '<div class="no-data">Please select a date or subject to view the schedule</div>';
+                return;
+            }
+            
+            displayDateSchedule(selectedDate);
+        });
+
+        // Display subject schedule when subject is selected
+        const subjectSelect = document.getElementById('subjectSelect');
+        subjectSelect.addEventListener('change', function() {
+            const selectedSubject = this.value;
+            const scheduleDisplay = document.getElementById('scheduleDisplay');
+            
+            if (!selectedSubject) {
+                scheduleDisplay.innerHTML = '<div class="no-data">Please select a date or subject to view the schedule</div>';
+                return;
+            }
+            
+            displaySubjectSchedule(selectedSubject);
+        });
+
+        // Function to display schedule for a specific date
+        function displayDateSchedule(date) {
+            const dayData = scheduleData[date];
+            const scheduleDisplay = document.getElementById('scheduleDisplay');
+            
+            if (dayData.holiday) {
+                scheduleDisplay.innerHTML = `
+                    <div class="day-card">
+                        <div class="day-header">
+                            <div class="date">${dayData.date}</div>
+                            <div class="day">${dayData.day}</div>
+                        </div>
+                        <div class="holiday">
+                            <h3>${dayData.holiday}</h3>
+                            <p>No classes scheduled</p>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+            
+            let sessionsHTML = '';
+            
+            if (dayData.remedial) {
+                sessionsHTML += `
+                    <div class="session remedial">
+                        <div class="session-time">${dayData.remedial.time}</div>
+                        <div class="session-subject">${dayData.remedial.subject} (Remedial)</div>
+                    </div>
+                `;
+            }
+            
+            if (dayData.sessions) {
+                dayData.sessions.forEach(session => {
+                    sessionsHTML += `
+                        <div class="session">
+                            <div class="session-time">${session.time}</div>
+                            <div class="session-subject">${session.subject}</div>
+                        </div>
+                    `;
+                });
+            }
+            
+            if (dayData.assessment) {
+                sessionsHTML += `
+                    <div class="session assessment">
+                        <div class="session-time">${dayData.assessment.time}</div>
+                        <div class="session-subject">${dayData.assessment.subject} (Assessment)</div>
+                    </div>
+                `;
+            }
+            
+            if (dayData.remarks) {
+                sessionsHTML += `
+                    <div class="remarks">
+                        <strong>Remarks:</strong> ${dayData.remarks}
+                    </div>
+                `;
+            }
+            
+            if (!dayData.remedial && !dayData.sessions && !dayData.assessment) {
+                sessionsHTML = '<div class="no-data">No schedule data available for this date</div>';
+            }
+            
+            scheduleDisplay.innerHTML = `
+                <div class="day-card">
+                    <div class="day-header">
+                        <div class="date">${dayData.date}</div>
+                        <div class="day">${dayData.day}</div>
+                    </div>
+                    ${sessionsHTML}
+                </div>
+            `;
+        }
+
+        // Function to display all dates for a specific subject
+        function displaySubjectSchedule(subject) {
+            const scheduleDisplay = document.getElementById('scheduleDisplay');
+            let subjectDates = [];
+            
+            // Find all dates where the subject appears
+            Object.keys(scheduleData).forEach(date => {
+                const dayData = scheduleData[date];
+                
+                // Skip holidays
+                if (dayData.holiday) return;
+                
+                // Check remedial session
+                if (dayData.remedial && dayData.remedial.subject.includes(subject)) {
+                    subjectDates.push({
+                        date: dayData.date,
+                        day: dayData.day,
+                        time: dayData.remedial.time,
+                        type: "Remedial"
+                    });
+                }
+                
+                // Check regular sessions
+                if (dayData.sessions) {
+                    dayData.sessions.forEach(session => {
+                        if (session.subject.includes(subject)) {
+                            subjectDates.push({
+                                date: dayData.date,
+                                day: dayData.day,
+                                time: session.time,
+                                type: "Regular"
+                            });
+                        }
+                    });
+                }
+                
+                // Check assessment
+                if (dayData.assessment && dayData.assessment.subject.includes(subject)) {
+                    subjectDates.push({
+                        date: dayData.date,
+                        day: dayData.day,
+                        time: dayData.assessment.time,
+                        type: "Assessment"
+                    });
+                }
+            });
+            
+            if (subjectDates.length === 0) {
+                scheduleDisplay.innerHTML = `
+                    <div class="no-data">No schedule found for ${subject}</div>
+                `;
+                return;
+            }
+            
+            let datesHTML = '';
+            subjectDates.forEach(item => {
+                datesHTML += `
+                    <div class="subject-date">
+                        <div><strong>${item.date}</strong> (${item.day})</div>
+                        <div>${item.time}</div>
+                        <div>${item.type}</div>
+                    </div>
+                `;
+            });
+            
+            scheduleDisplay.innerHTML = `
+                <div class="subject-schedule">
+                    <h3>${subject} - Schedule Dates</h3>
+                    <div class="subject-dates">
+                        ${datesHTML}
+                    </div>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
